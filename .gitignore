@@ -1,1 +1,6 @@
 /.vs/YouTrackFlow/v14/*.suo
+*/bin/*
+*/obj/*
+*/lib/*
+packages/
+*.user
