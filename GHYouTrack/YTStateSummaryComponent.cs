@@ -23,6 +23,7 @@ namespace GHYouTrack
 
     private Dictionary<string, string> _resolvedGroup = new Dictionary<string, string>()
     {
+      {"Investigate", "Unresolved" },
       {"Unset", "Unresolved" },
       {"Needs Doc", "Unresolved" },
       {"Needs Testing", "Unresolved" },
@@ -30,16 +31,17 @@ namespace GHYouTrack
       {"Submitted", "Unresolved" },
       {"Incomplete information", "Unresolved" },
       {"To be discussed", "Unresolved"},
-      {"Awaiting Dependency", "Active"},
-      {"In Progress", "Active"},
+      {"Awaiting Dependency", "Unresolved"},
+      {"In Progress", "Unresolved"},
       {"Next Up", "Unresolved"},
       {"Open", "Unresolved"},
       {"Closed", "Resolved"},
-      {"Can't Reproduce", "Ignored"},
-      {"Inactive", "Ignored"},
-      {"Duplicate", "Ignored"},
-      {"Won't fix", "Ignored"},
-      {"Obsolete", "Ignored"},
+      {"Announce", "Resolved" },
+      {"Can't Reproduce", "Resolved"},
+      {"Inactive", "Resolved"},
+      {"Duplicate", "Resolved"},
+      {"Won't fix", "Resolved"},
+      {"Obsolete", "Resolved"},
     };
 
     /// <summary>

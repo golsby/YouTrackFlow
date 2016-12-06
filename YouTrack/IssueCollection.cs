@@ -8,16 +8,43 @@ namespace YouTrack
 {
   public class IssueCollection : List<Issue>
   {
+    public bool AllowDuplicates { get; set; }
+    public IssueCollection()
+    {
+      AllowDuplicates = false;
+    }
     public IssueCollection AsOf(DateTime Timestamp)
     {
       IssueCollection result = new IssueCollection();
       foreach(Issue issue in this)
       {
+        if (issue == null)
+          continue;
         var issueAsOf = issue.AsOf(Timestamp);
         if (issueAsOf != null)
           result.Add(issueAsOf);
       }
       return result;
+    }
+
+    public new void AddRange(IEnumerable<Issue> issues )
+    {
+      foreach (var issue in issues)
+      {
+        Add(issue);
+      }
+    }
+
+    public new void Add(Issue issue)
+    {
+      if (!AllowDuplicates)
+        base.Remove(issue);
+      base.Add(issue);
+    }
+
+    public new void Clear()
+    {
+      base.Clear();
     }
 
     int CountState(string name)

@@ -9,7 +9,7 @@ using System.IO;
 namespace YouTrack
 {
   [Serializable]
-  public class Issue
+  public class Issue : IEquatable<Issue>
   {
     public string id = "";
     public string entityId = "";
@@ -80,11 +80,13 @@ namespace YouTrack
     {
       var q = new YouTrack.Query();
       var history = q.IssueHistory(issue.id);
+      issue.Copy(history[0]);
       issue.SetChangesFromHistory(history);
       issue.SaveToTemp();
       // Console.WriteLine("{0} history fetched", issue.id);
       return issue;
     }
+
 
     public Issue AsOf(DateTime Timestamp)
     {
@@ -266,14 +268,33 @@ namespace YouTrack
 
     public static Issue Load(string path)
     {
-      IFormatter formatter = new BinaryFormatter();
-      Stream stream = new FileStream(path,
-                                FileMode.Open,
-                                FileAccess.Read,
-                                FileShare.Read);
-      Issue obj = (Issue)formatter.Deserialize(stream);
-      stream.Close();
-      return obj;
+      try
+      {
+        IFormatter formatter = new BinaryFormatter();
+        Stream stream = new FileStream(path,
+                                  FileMode.Open,
+                                  FileAccess.Read,
+                                  FileShare.Read);
+        Issue obj = (Issue)formatter.Deserialize(stream);
+        stream.Close();
+        return obj;
+      }
+      catch
+      {
+        return null;
+      }
+    }
+
+    public bool Equals(Issue other)
+    {
+      if (id == other.id)
+        return true;
+      return false;
+    }
+
+    public override string ToString()
+    {
+      return string.Format("{0} {1} {2}", this.id, this.state, this.assignee);
     }
   }
 }
